@@ -1,3 +1,9 @@
+"""
+    Given two numbers 'N' and 'S' , find the largest number that can be formed with 'N' digits 
+    and whose sum of digits should be equals to 'S'.
+"""
+
+
 class Solution:
     def findLargest(self, N, S):
         ans = ""
