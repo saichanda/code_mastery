@@ -32,6 +32,21 @@ class Solution:
         return 1 if n in arr else 0
 
 
+#Alternate Solution (Optimized)
+class AlternateSolution:
+    def isLucky(self, n):
+        count = 2
+        while True:
+            if n%count != 0:
+                if int(n/count) == 0:
+                    return 1
+                n = n - int(n/count)
+                count += 1
+            else:
+                return 0
+        return 1
+
+
 if __name__ == "__main__":
     n = int(input("Enter number to find if it is lucky number: "))
     obj = Solution()
