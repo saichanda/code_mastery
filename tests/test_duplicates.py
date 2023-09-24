@@ -6,24 +6,28 @@
     Note: The extra space is only for the array to be returned. Try and perform all operations within the provided array. 
 """
 
+import pytest
+import numpy as np
+
 
 class Solution:
-    def duplicates(self, arr, n): 
-        res = []
+    def duplicates(self, arr, n, sol): 
         for i in range(n):
             idx = arr[i] % n
             arr[idx] += n
-        for i in range(n):
-            if arr[i] // n >= 2:
-                res.append(i)
-        if not res:
-            return [-1]
-    	return res
+        res = [i for i in range(n) if arr[i] // n >= 2]
+        np.testing.assert_allclose(res, sol)
 
 
-if(__name__=='__main__'):
-    n = int(input("Enter N: "))
-    arr = list(map(int, input("Enter the list of elements between 0 and N-1: ").strip().split()))
-    res = Solution().duplicates(arr, n)
-    for i in res:
-        print(i,end=" ")
+@pytest.mark.parametrize(
+    "N, arr, sol",
+    (
+        (
+            5,
+            [2,3,1,2,3],
+            [2,3]
+        ),
+    ),
+)
+def test_duplicates(N, arr, sol):
+    Solution().duplicates(arr, N, sol)
