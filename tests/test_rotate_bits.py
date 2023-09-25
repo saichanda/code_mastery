@@ -5,9 +5,12 @@
     Note: Integer N is stored using 16 bits. i.e. 12 will be stored as 0000000000001100.
 """
 
+import pytest
+import numpy as np
+
 
 class Solution:
-    def rotate(self, N, D):
+    def rotate(self, N, D, sol):
         ar = [0] * 16
         if D > 16:
             D = D % 16
@@ -19,18 +22,18 @@ class Solution:
             if not N:
                 break
         res1 = sum(
-            [2 ** (len(ar) - i - 1) * ele for i, ele in enumerate(ar[D:] + ar[:D])]
+            2 ** (len(ar) - i - 1) * ele for i, ele in enumerate(ar[D:] + ar[:D])
         )
         res2 = sum(
-            [2 ** (len(ar) - i - 1) * ele for i, ele in enumerate(ar[-D:] + ar[:-D])]
+            2 ** (len(ar) - i - 1) * ele for i, ele in enumerate(ar[-D:] + ar[:-D])
         )
-        return [res1, res2]
+        res = [res1, res2]
+        np.testing.assert_allclose(res, sol)
 
 
-if __name__ == "__main__":
-    n, d = input("Enter N and D values (separated by space)").strip().split(" ")
-    n, d = int(n), int(d)
-    ob = Solution()
-    ans = ob.rotate(n, d)
-    print(ans[0])
-    print(ans[1])
+@pytest.mark.parametrize(
+    "N, D, sol",
+    ((13, 4, [208, 53248]),),
+)
+def test_rotate_bits(N, D, sol):
+    Solution().rotate(N, D, sol)

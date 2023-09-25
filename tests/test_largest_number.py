@@ -3,9 +3,12 @@
     and whose sum of digits should be equals to 'S'.
 """
 
+import pytest
+import numpy as np
+
 
 class Solution:
-    def findLargest(self, N, S):
+    def findLargest(self, N, S, sol):
         ans = ""
         total = 0
         tmp = S
@@ -24,15 +27,18 @@ class Solution:
             for _ in range(N - len(ans)):
                 ans += "0"
 
-        return -1 if total != tmp else ans
+        np.testing.assert_allclose([int(ans)], [sol])
 
 
-if __name__ == "__main__":
-    N = int(input("N: "))
-    S = int(input("S: "))
-    ob = Solution()
-    res = ob.findLargest(N, S)
-    if res != -1:
-        print(f"Largest Number with {N} digits and summing up to {S} is {res}")
-    else:
-        print(f"There doesn't exist a number that has {N} digits and summing up to {S}")
+@pytest.mark.parametrize(
+    "N, S, sol",
+    (
+        (
+            2,
+            9,
+            90,
+        ),
+    ),
+)
+def test_largest_number(N, S, sol):
+    Solution().findLargest(N, S, sol)

@@ -8,9 +8,12 @@
         int: last index of the element x
 """
 
+import pytest
+import numpy as np
+
 
 class Solution:
-    def find(self, arr, n, x):
+    def find(self, arr, n, x, sol):
         if x not in arr:
             return -1, -1
         first = 0
@@ -22,13 +25,20 @@ class Solution:
                 first += 1
             if arr[last] != x:
                 last -= 1
-        return first, last
+        res = [first, last]
+        np.testing.assert_allclose(res, sol)
 
 
-l = list(map(int, input("Enter n and x: ").split()))
-n = l[0]
-x = l[1]
-arr = list(map(int, input(f"Enter list of {n} elements:\n").split()))
-ob = Solution()
-ans = ob.find(arr, n, x)
-print(*ans)
+@pytest.mark.parametrize(
+    "N, arr, x, sol",
+    (
+        (
+            5,
+            [2, 3, 1, 2, 3],
+            3,
+            [1, 4],
+        ),
+    ),
+)
+def test_first_last_x(N, arr, x, sol):
+    Solution().find(arr, N, x, sol)

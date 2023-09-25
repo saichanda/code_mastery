@@ -13,12 +13,16 @@
 You are given a number N, you need to tell whether the number is lucky or not.
 """
 
+import pytest
+import numpy as np
+
 
 class Solution:
-    def isLucky(self, n):
+    def isLucky(self, n, sol):
         arr = list(range(1, n + 1))
         index = 0
         j = 1
+        flag = 0
         while True:
             while index + j < len(arr):
                 arr[index + j] = 0
@@ -29,28 +33,48 @@ class Solution:
             index = 0
             if j > len(arr):
                 break
-        return 1 if n in arr else 0
+        flag = 1 if n in arr else 0
+        np.testing.assert_allclose(flag, sol)
 
 
-#Alternate Solution (Optimized)
+# Alternate Solution (Optimized)
 class AlternateSolution:
-    def isLucky(self, n):
+    def isLucky(self, n, sol):
         count = 2
+        flag = 0
         while True:
-            if n%count != 0:
-                if int(n/count) == 0:
-                    return 1
-                n = n - int(n/count)
-                count += 1
-            else:
-                return 0
-        return 1
+            if n % count == 0:
+                flag = 0
+                break
+            if int(n / count) == 0:
+                flag = 1
+                break
+            n = n - int(n / count)
+            count += 1
+        np.testing.assert_allclose(flag, sol)
 
 
-if __name__ == "__main__":
-    n = int(input("Enter number to find if it is lucky number: "))
-    obj = Solution()
-    if obj.isLucky(n):
-        print(f"{n} is a lucky number")
-    else:
-        print(f"{n} is not a lucky number")
+@pytest.mark.parametrize(
+    "n, sol",
+    (
+        (
+            19,
+            1,
+        ),
+    ),
+)
+def test_is_lucky_number_1(n, sol):
+    Solution().isLucky(n, sol)
+
+
+@pytest.mark.parametrize(
+    "n, sol",
+    (
+        (
+            19,
+            1,
+        ),
+    ),
+)
+def test_is_lucky_number_2(n, sol):
+    AlternateSolution().isLucky(n, sol)
