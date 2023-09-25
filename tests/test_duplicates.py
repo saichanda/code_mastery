@@ -11,7 +11,7 @@ import numpy as np
 
 
 class Solution:
-    def duplicates(self, arr, n, sol): 
+    def duplicates(self, arr, n, sol):
         for i in range(n):
             idx = arr[i] % n
             arr[idx] += n
@@ -21,13 +21,7 @@ class Solution:
 
 @pytest.mark.parametrize(
     "N, arr, sol",
-    (
-        (
-            5,
-            [2,3,1,2,3],
-            [2,3]
-        ),
-    ),
+    ((5, [2, 3, 1, 2, 3], [2, 3]),),
 )
 def test_duplicates(N, arr, sol):
     Solution().duplicates(arr, N, sol)
