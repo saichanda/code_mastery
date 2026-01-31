@@ -23,5 +23,5 @@ class Solution:
     "N, arr, sol",
     ((5, [2, 3, 1, 2, 3], [2, 3]),),
 )
-def test_duplicates(N, arr, sol):
+def test_duplicate_elements(N, arr, sol):
     Solution().duplicates(arr, N, sol)
