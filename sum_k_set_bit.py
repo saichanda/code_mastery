@@ -1,26 +1,19 @@
-"""
-    You are given a 0-indexed integer array nums and an integer k.
-
-    Return an integer that denotes the sum of elements in nums whose corresponding indices have exactly k set bits in their binary representation.
-"""
+import pytest
 
 class Solution:
-    def binary(self, idx):
-        count = 0
-        while idx > 0:
-            if idx % 2 == 0:
-                idx = int(idx/2)
-                continue
-            else:
-                count += 1
-                idx = int(idx/2)
-        return count
-    def sumIndicesWithKSetBits(self, nums: List[int], k: int) -> int:
-        sum_k = 0
+    def sumIndicesWithKSetBits(self, nums, k):
+        def count_set_bits(n):
+            return bin(n).count('1')
+
+        total_sum = 0
         for i in range(len(nums)):
-            if self.binary(i) == k:
-                sum_k += nums[i]
-        return sum_k
+            if count_set_bits(i) == k:
+                total_sum += nums[i]
+        return total_sum
 
-
-#TODO: Write a main file to call the method.
+@pytest.mark.parametrize("nums, k, expected", [
+    ([5, 10, 1, 5, 2], 1, 13),
+    ([4, 3, 2, 1], 2, 1)
+])
+def test_sum_indices_with_k_set_bits(nums, k, expected):
+    assert Solution().sumIndicesWithKSetBits(nums, k) == expected
