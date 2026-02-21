@@ -15,7 +15,7 @@ class Solution:
                 count += 1
                 idx = int(idx/2)
         return count
-    def sumIndicesWithKSetBits(self, nums: List[int], k: int) -> int:
+    def sumIndicesWithKSetBits(self, nums: list[int], k: int) -> int:
         sum_k = 0
         for i in range(len(nums)):
             if self.binary(i) == k:
@@ -23,4 +23,12 @@ class Solution:
         return sum_k
 
 
-#TODO: Write a main file to call the method.
+
+if __name__ == "__main__":
+    nums = [5, 10, 1, 5, 2]
+    k = 1
+
+    sol = Solution()
+    result = sol.sumIndicesWithKSetBits(nums, k)
+
+    print("Result:", result)
